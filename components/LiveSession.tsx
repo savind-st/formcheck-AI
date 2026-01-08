@@ -51,7 +51,7 @@ const LiveSession: React.FC<LiveSessionProps> = ({ exercise, onBack }) => {
 
   if (hasPermissions === false) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-zinc-950 p-6 text-center">
+      <div className="flex flex-col items-center justify-center h-[100dvh] bg-zinc-950 p-6 text-center">
         <div className="bg-red-500/10 p-4 rounded-full mb-4">
             <Video size={48} className="text-red-500" />
         </div>
@@ -75,9 +75,9 @@ const LiveSession: React.FC<LiveSessionProps> = ({ exercise, onBack }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-black">
+    <div className="flex flex-col h-[100dvh] bg-black">
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 p-4 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
+      <div className="absolute top-0 left-0 right-0 z-20 p-4 pt-[max(1rem,env(safe-area-inset-top))] flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
         <button 
             onClick={() => { disconnect(); onBack(); }}
             className="flex items-center gap-2 text-zinc-300 hover:text-white transition-colors bg-black/40 backdrop-blur-md px-4 py-2 rounded-full"

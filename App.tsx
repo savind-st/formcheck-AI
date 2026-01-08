@@ -3,10 +3,12 @@ import { EXERCISES } from './constants';
 import { Exercise } from './types';
 import ExerciseCard from './components/ExerciseCard';
 import LiveSession from './components/LiveSession';
+import ExercisePreviewModal from './components/ExercisePreviewModal';
 import { Dumbbell } from 'lucide-react';
 
 export default function App() {
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+  const [previewExercise, setPreviewExercise] = useState<Exercise | null>(null);
 
   if (selectedExercise) {
     return (
@@ -18,7 +20,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 selection:bg-emerald-500/30">
+    <div className="min-h-[100dvh] bg-zinc-950 text-zinc-100 selection:bg-emerald-500/30">
       {/* Header */}
       <header className="border-b border-zinc-800 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
@@ -67,11 +69,23 @@ export default function App() {
             <ExerciseCard 
               key={exercise.id} 
               exercise={exercise} 
-              onSelect={setSelectedExercise} 
+              onSelect={setPreviewExercise} 
             />
           ))}
         </div>
       </div>
+
+      {/* Preview Modal */}
+      {previewExercise && (
+        <ExercisePreviewModal 
+          exercise={previewExercise}
+          onClose={() => setPreviewExercise(null)}
+          onStart={() => {
+            setSelectedExercise(previewExercise);
+            setPreviewExercise(null);
+          }}
+        />
+      )}
 
       {/* Footer */}
       <footer className="border-t border-zinc-900 bg-zinc-950 py-12 mt-12">

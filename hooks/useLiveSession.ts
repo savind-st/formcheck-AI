@@ -77,9 +77,14 @@ export function useLiveSession({ exerciseName, videoRef }: UseLiveSessionProps) 
       inputAudioContextRef.current = inputCtx;
       
       // Get User Media (Audio & Video)
+      // Use "ideal" constraints for mobile compatibility and prefer user-facing camera
       const stream = await navigator.mediaDevices.getUserMedia({ 
         audio: true, 
-        video: { width: 640, height: 480 } 
+        video: { 
+          width: { ideal: 640 }, 
+          height: { ideal: 480 },
+          facingMode: 'user' 
+        } 
       });
       streamRef.current = stream;
 
@@ -254,8 +259,16 @@ export function useLiveSession({ exerciseName, videoRef }: UseLiveSessionProps) 
     videoIntervalRef.current = window.setInterval(() => {
         if (!video || !ctx || !sessionPromiseRef.current || !isSessionActiveRef.current || !shouldSendVideoRef.current) return;
         
-        canvas.width = video.videoWidth * 0.5; // Downscale for bandwidth
-        canvas.height = video.videoHeight * 0.5;
+        // Ensure video is ready to prevent 0-dimension errors
+        if (video.readyState < 2 || video.videoWidth === 0 || video.videoHeight === 0) return;
+
+        // Calculate dynamic dimensions based on actual video size to avoid distortion
+        const targetWidth = 320; // Reduced width for bandwidth
+        const aspectRatio = video.videoHeight / video.videoWidth;
+        const targetHeight = targetWidth * aspectRatio;
+
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
         
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         

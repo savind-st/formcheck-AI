@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#09090b" />
+    <meta name="description" content="Real-time AI exercise form correction" />
+    <link rel="manifest" href="/manifest.json" />
     <title>FormCheck AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -11,6 +14,13 @@
         font-family: 'Inter', sans-serif;
         background-color: #09090b;
         color: #f4f4f5;
+        overscroll-behavior: none;
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
       }
       /* Custom scrollbar for transcripts */
       .scrollbar-hide::-webkit-scrollbar {
@@ -19,6 +29,11 @@
       .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: none;
+      }
+      /* Restore text selection for inputs if added later */
+      input, textarea {
+        -webkit-user-select: text;
+        user-select: text;
       }
     </style>
   <script type="importmap">
